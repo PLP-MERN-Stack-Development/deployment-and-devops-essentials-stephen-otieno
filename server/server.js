@@ -19,11 +19,7 @@ const app = express();
 const server = http.createServer(app);
 
 // Use environment variable for client URL or default to 5173
-// const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
-const allowedOrigins = [
-  'http://localhost:5173',
-  process.env.CLIENT_URL,
-];
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 
 // Initialize Socket.IO
 const io = new Server(server, {
@@ -37,16 +33,7 @@ const io = new Server(server, {
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-}));
+app.use(cors({ origin: CLIENT_URL }));
 
 
 // Connect to MongoDB
