@@ -4,10 +4,12 @@ import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 
 // Socket.io connection URL
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
+
 
 // Create socket instance
-export const socket = io(SOCKET_URL, {
+export const socket = io(BASE_URL, {
   autoConnect: false,
   reconnection: true,
   reconnectionAttempts: 5,
@@ -55,7 +57,7 @@ export const useSocket = () => {
   const fetchMessageHistory = async (roomName) => {
     setIsLoadingHistory(true);
     try {
-      const res = await fetch(`${SOCKET_URL}/api/messages/${roomName}`);
+      const res = await fetch(`${BASE_URL}/api/messages/${roomName}`);
       const history = await res.json();
       setMessages(history);
     } catch (err) {
