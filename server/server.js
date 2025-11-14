@@ -89,7 +89,6 @@ io.on('connection', (socket) => {
     socketUsers.set(userId, socket.id);
     io.emit('online_users', Array.from(socketUsers.keys())); // broadcast current online users
   }
-
   socket.on('user_join', (username) => {
     if (!userId) return;
     users[socket.id] = { username, userId };
