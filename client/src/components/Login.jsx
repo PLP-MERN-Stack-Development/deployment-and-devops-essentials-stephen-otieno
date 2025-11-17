@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSocket } from "../socket/socket";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../config";  
+
 
 function Login({ setLoggedIn }) {
   const { connect } = useSocket();
@@ -18,7 +20,7 @@ function Login({ setLoggedIn }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch(`${API_URL}api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
